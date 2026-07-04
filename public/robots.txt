@@ -1,0 +1,32 @@
+# Al-Shifa Herbal - Robots.txt
+User-agent: *
+Allow: /
+Allow: /shop
+Allow: /products
+Allow: /about
+Allow: /contact
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /api/
+Disallow: /private/
+
+# Sitemap
+Sitemap: https://alshifa.lenzro.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Popular Search Engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Slurp
+Allow: /

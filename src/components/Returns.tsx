@@ -1,0 +1,289 @@
+import { useState, useMemo } from "react";
+import { Plus, Trash2 } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { formatDate } from "../utils/dateFormatter";
+import { useProducts, useReturns } from "../hooks/useSupabaseQuery";
+import { invalidateAfterReturn } from "../utils/cacheInvalidation";
+import { getReturnById, deleteReturn } from "../api/returnsApi";
+import { updateProductStock } from "../api/productsApi";
+import { createSale } from "../api/salesApi";
+import ReturnForm from "./ReturnForm";
+
+export default function Returns() {
+  const queryClient = useQueryClient();
+  const { data: returns = [], refetch: refetchReturns } = useReturns();
+  const { data: products = [] } = useProducts();
+  const [showForm, setShowForm] = useState(false);
+
+  const sortedReturns = useMemo(() => {
+    const toTime = (r: any) => {
+      const d = r?.return_date || r?.created_at;
+      const t = d ? new Date(d).getTime() : 0;
+      return Number.isFinite(t) ? t : 0;
+    };
+    return [...returns].sort((a: any, b: any) => {
+      const diff = toTime(b) - toTime(a);
+      if (diff !== 0) return diff;
+      const idA = String(a?.id ?? "");
+      const idB = String(b?.id ?? "");
+      return idB.localeCompare(idA);
+    });
+  }, [returns]);
+
+  function getProductById(id: string) {
+    return products.find((p) => p.id === id);
+  }
+
+  function handleCloseForm() {
+    setShowForm(false);
+  }
+
+  async function handleFormSuccess() {
+    handleCloseForm();
+    refetchReturns();
+  }
+
+  async function handleDeleteReturn(
+    returnId: string,
+    productId: string,
+    qty: number,
+    productName: string
+  ) {
+    const deleteMessage = `Delete this return record for "${productName}"?\n\nThis will also reverse the refund in sales records.\n\nThis cannot be undone!`;
+    if (!confirm(deleteMessage)) return;
+
+    try {
+      // Get return details before deleting
+      const returnData: any = await getReturnById(returnId);
+
+      // Delete return record
+      try {
+        await deleteReturn(returnId);
+      } catch (error) {
+        console.error("Error deleting return:", error);
+        alert("Failed to delete return record.");
+        return;
+      }
+
+      // Update inventory: Subtract returned quantity from stock since return is being deleted
+      const prod = getProductById(productId);
+      if (prod) {
+        const newStock = Math.max(prod.quantity_in_stock - qty, 0);
+        try {
+          await updateProductStock(productId, newStock);
+        } catch (updateError) {
+          console.error("Error updating inventory:", updateError);
+          alert(
+            "Return deleted but failed to update inventory. Please update stock manually."
+          );
+        }
+
+        // Reverse the negative sale entry: Add back positive sale to restore revenue
+        if (returnData) {
+          try {
+            await createSale({
+              product_id: productId,
+              quantity_sold: qty,
+              selling_price: returnData.unit_price || prod.selling_price,
+              buying_price: prod.buying_price,
+              total_sale: returnData.total_refund || returnData.unit_price * qty,
+              profit: (returnData.unit_price - prod.buying_price) * qty,
+              payment_method: returnData.payment_method || "Cash",
+              sold_by: returnData.processed_by,
+              sale_date: new Date().toISOString(),
+              original_price: returnData.unit_price || prod.selling_price,
+              final_price: returnData.unit_price || prod.selling_price,
+              discount_percentage: 0,
+              discount_amount: 0,
+            });
+          } catch (saleError) {
+            console.error("Error reversing refund in sales:", saleError);
+            alert(
+              "Return deleted but failed to reverse sales entry. Revenue may be incorrect."
+            );
+          }
+        }
+      }
+
+      alert("✅ Return record deleted successfully!");
+
+      // ✅ Invalidate caches to update dashboard
+      await invalidateAfterReturn(queryClient);
+      refetchReturns();
+    } catch (err) {
+      console.error("Error deleting return:", err);
+      alert("Failed to delete return record.");
+    }
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
+            Returns
+          </h2>
+          <p className="text-slate-900/80 dark:text-slate-300 mt-0.5 text-xs sm:text-sm">
+            Customer product returns & stock restorations
+          </p>
+        </div>
+        <button
+          onClick={() => setShowForm(true)}
+          className="flex items-center justify-center space-x-2 bg-gradient-to-r from-rose-500 via-red-500 to-rose-600 dark:from-rose-600 dark:via-red-600 dark:to-rose-700 text-white px-4 py-2.5 rounded-2xl hover:scale-105 transition-all duration-300 shadow-lg shadow-rose-500/30 hover:shadow-xl hover:shadow-rose-500/40 w-full sm:w-auto font-bold text-sm"
+        >
+          <Plus className="w-4 h-4" />
+          <span>Record Return</span>
+        </button>
+      </div>
+
+      <div className="bg-gradient-to-br from-white via-amber-50/15 to-white dark:from-slate-800 dark:via-amber-900/5 dark:to-slate-800 border border-amber-200/60 dark:border-amber-700/60 shadow-sm rounded-2xl overflow-hidden transition-colors duration-200">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-amber-50/40 dark:bg-slate-700/50 border-b border-amber-200/60 dark:border-amber-900/30">
+              <tr>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-900/80 dark:text-slate-300 uppercase tracking-wider">
+                  Date
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-900/80 dark:text-slate-300 uppercase tracking-wider">
+                  Product
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-900/80 dark:text-slate-300 uppercase tracking-wider">
+                  Qty Returned
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-900/80 dark:text-slate-300 uppercase tracking-wider">
+                  Refund
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-900/80 dark:text-slate-300 uppercase tracking-wider">
+                  Reason
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-900/80 dark:text-slate-300 uppercase tracking-wider">
+                  Condition
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-900/80 dark:text-slate-300 uppercase tracking-wider">
+                  Processed By
+                </th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-slate-900/80 dark:text-slate-300 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-900/80 dark:text-slate-300 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-amber-100/50 dark:divide-slate-700">
+              {returns.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={9}
+                    className="px-6 py-12 text-center text-slate-900/70 dark:text-slate-400"
+                  >
+                    No returns recorded yet.
+                  </td>
+                </tr>
+              ) : (
+                sortedReturns.map((r: any) => {
+                  const product = getProductById(r.product_id);
+                  return (
+                    <tr
+                      key={r.id}
+                      className="hover:bg-gradient-to-br hover:from-amber-50/40 hover:to-white dark:hover:from-slate-700/50 dark:hover:to-slate-800/50 transition-colors"
+                    >
+                      <td className="px-6 py-4 text-slate-900 dark:text-slate-200">
+                        {formatDate(r.return_date || r.created_at)}
+                        <br />
+                        <span className="text-xs text-slate-700 dark:text-slate-400">
+                          {new Date(
+                            r.return_date || r.created_at
+                          ).toLocaleTimeString()}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center space-x-3">
+                          {product?.image_url ? (
+                            <img
+                              src={product.image_url}
+                              alt={product.name}
+                              className="w-10 h-10 object-cover rounded-xl border border-amber-300/70 dark:border-amber-600/50 shadow-sm"
+                            />
+                          ) : (
+                            <div className="w-10 h-10 bg-white/90 dark:bg-slate-700 rounded-xl flex items-center justify-center border border-amber-300/70 dark:border-amber-600/50 shadow-sm">
+                              <span className="text-slate-700 dark:text-slate-300 text-xs">
+                                No Image
+                              </span>
+                            </div>
+                          )}
+                          <div>
+                            <p className="font-bold text-slate-900 dark:text-slate-200 text-sm">
+                              {product?.name || "Unknown"}
+                            </p>
+                            <p className="text-xs text-slate-500 dark:text-slate-400">
+                              {product?.product_id || "-"}
+                            </p>
+                            {r.sale_id && (
+                              <p className="text-[10px] text-slate-700 dark:text-slate-400">
+                                Sale: {r.sale_id}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-slate-900 dark:text-slate-200 font-semibold">
+                        {r.quantity_returned}
+                      </td>
+                      <td className="px-6 py-4 font-bold text-slate-900 dark:text-slate-100">
+                        KES {Number(r.total_refund || 0).toLocaleString()}
+                      </td>
+                      <td
+                        className="px-6 py-4 text-slate-600 dark:text-slate-400 text-xs max-w-[150px] truncate"
+                        title={r.reason}
+                      >
+                        {r.reason || "-"}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 border border-rose-300 dark:border-rose-700">
+                          {r.condition || "-"}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-slate-900 dark:text-slate-200 font-medium">
+                        {r.processed_by}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700">
+                          {r.status || "pending"}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <button
+                          onClick={() =>
+                            handleDeleteReturn(
+                              r.id,
+                              r.product_id,
+                              r.quantity_returned,
+                              product?.name || "Unknown Product"
+                            )
+                          }
+                          className="inline-flex items-center justify-center w-8 h-8 bg-rose-100 dark:bg-rose-900/30 hover:bg-rose-200 dark:hover:bg-rose-800/40 text-rose-600 dark:text-rose-400 rounded-xl transition-all duration-200 border border-rose-300 dark:border-rose-700 hover:border-rose-400 dark:hover:border-rose-600"
+                          title="Delete Return"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {showForm && (
+        <ReturnForm
+          products={products}
+          onClose={handleCloseForm}
+          onSuccess={handleFormSuccess}
+        />
+      )}
+    </div>
+  );
+}
