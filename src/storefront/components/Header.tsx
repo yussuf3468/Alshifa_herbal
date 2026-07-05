@@ -53,17 +53,17 @@ export default function Header() {
           : { background: "transparent" }
       }
     >
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-5 sm:h-[72px] sm:px-8">
+      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-5 sm:h-[72px] sm:px-8 xl:gap-8 2xl:h-20 2xl:max-w-screen-2xl 2xl:px-12">
         {/* Logo */}
         <Link to="/" className="flex min-w-0 items-center gap-3">
           <span
-            className="sf-display flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-lg font-semibold"
+            className="sf-display flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-lg font-semibold 2xl:h-11 2xl:w-11 2xl:rounded-2xl 2xl:text-xl"
             style={{ background: "var(--sf-accent)", color: "var(--sf-accent-ink)" }}
           >
             {storeConfig.monogram}
           </span>
           <span
-            className="sf-display truncate text-[17px] font-semibold tracking-tight"
+            className="sf-display truncate text-[17px] font-semibold tracking-tight 2xl:text-[20px]"
             style={{ color: inkColor }}
           >
             {storeConfig.name}
@@ -71,7 +71,7 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-7 lg:flex">
+        <nav className="hidden items-center gap-7 lg:flex xl:gap-9 2xl:gap-11">
           {NAV_ITEMS.map((item) => {
             const active =
               route.path === item.to ||
@@ -80,7 +80,7 @@ export default function Header() {
               <Link
                 key={item.to}
                 to={item.to}
-                className="sf-link text-[13.5px] font-medium transition-colors"
+                className="sf-link text-[13.5px] font-medium transition-colors xl:text-[14px] 2xl:text-[15.5px]"
                 style={{
                   color: active
                     ? inkColor
@@ -101,14 +101,14 @@ export default function Header() {
             type="button"
             onClick={ui.openSearch}
             aria-label="Search"
-            className="flex h-10 items-center gap-2 rounded-full px-3 transition-all duration-300 hover:scale-105 sm:px-4"
+            className="flex h-10 items-center gap-2 rounded-full px-3 transition-all duration-300 hover:scale-105 sm:px-4 2xl:h-11 2xl:px-5"
             style={{
               color: inkColor,
               background: overHero ? "rgba(255,255,255,0.1)" : "var(--sf-accent-soft)",
             }}
           >
-            <Search className="h-[18px] w-[18px]" />
-            <span className="hidden text-[13px] font-medium md:inline">Search</span>
+            <Search className="h-[18px] w-[18px] 2xl:h-5 2xl:w-5" />
+            <span className="hidden text-[13px] font-medium md:inline 2xl:text-[14px]">Search</span>
             <kbd
               className="hidden rounded-md px-1.5 py-0.5 text-[10px] font-semibold md:inline"
               style={{
@@ -122,10 +122,10 @@ export default function Header() {
           <Link
             to="/wishlist"
             aria-label="Wishlist"
-            className="relative hidden h-10 w-10 items-center justify-center rounded-full transition-transform duration-300 hover:scale-110 sm:flex"
+            className="relative hidden h-10 w-10 items-center justify-center rounded-full transition-transform duration-300 hover:scale-110 sm:flex 2xl:h-11 2xl:w-11"
             style={{ color: inkColor }}
           >
-            <Heart className="h-[19px] w-[19px]" />
+            <Heart className="h-[19px] w-[19px] 2xl:h-[21px] 2xl:w-[21px]" />
             {wishlist.length > 0 && (
               <span
                 className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-bold text-white"
@@ -139,20 +139,20 @@ export default function Header() {
           <Link
             to="/account"
             aria-label="Account"
-            className="hidden h-10 w-10 items-center justify-center rounded-full transition-transform duration-300 hover:scale-110 sm:flex"
+            className="hidden h-10 w-10 items-center justify-center rounded-full transition-transform duration-300 hover:scale-110 sm:flex 2xl:h-11 2xl:w-11"
             style={{ color: inkColor }}
           >
-            <UserRound className="h-[19px] w-[19px]" />
+            <UserRound className="h-[19px] w-[19px] 2xl:h-[21px] 2xl:w-[21px]" />
           </Link>
 
           <button
             type="button"
             onClick={ui.openCart}
             aria-label="Cart"
-            className="relative flex h-10 w-10 items-center justify-center rounded-full transition-transform duration-300 hover:scale-110"
+            className="relative flex h-10 w-10 items-center justify-center rounded-full transition-transform duration-300 hover:scale-110 2xl:h-11 2xl:w-11"
             style={{ color: inkColor }}
           >
-            <ShoppingBag className="h-[19px] w-[19px]" />
+            <ShoppingBag className="h-[19px] w-[19px] 2xl:h-[21px] 2xl:w-[21px]" />
             {totalItems > 0 && (
               <span
                 className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-bold"

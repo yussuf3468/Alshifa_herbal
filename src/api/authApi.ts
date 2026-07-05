@@ -37,9 +37,18 @@ export async function signUpWithPassword(
 }
 
 export async function signOutUser() {
-  const response = await apiClient.auth.signOut();
-  if (response.error) {
-    throw response.error;
+  try {
+    const response = await apiClient.auth.signOut();
+    // "Session missing" means we're already signed out — that's the goal,
+    // not an error worth surfacing.
+    if (response.error && response.error.name !== "AuthSessionMissingError") {
+      throw response.error;
+    }
+  } catch (error) {
+    if ((error as { name?: string })?.name === "AuthSessionMissingError") {
+      return;
+    }
+    throw error;
   }
 }
 

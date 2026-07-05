@@ -95,8 +95,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await signOutUser();
     } catch (error) {
+      // Even if the server-side sign-out fails, the user asked to log out —
+      // don't leave them stuck in the admin UI.
       console.error("Error signing out:", error);
-      throw error;
+    } finally {
+      setUser(null);
     }
   };
 
