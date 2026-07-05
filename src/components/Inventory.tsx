@@ -15,8 +15,10 @@ import {
   FileText,
   LayoutGrid,
   List,
+  Crown,
 } from "lucide-react";
-import { useProducts } from "../hooks/useSupabaseQuery";
+import { useProducts, useStoreSubscription } from "../hooks/useSupabaseQuery";
+import { getPlan } from "../config/subscriptionPlans";
 import { deleteProductWithRelations } from "../api";
 import type { Product } from "../types";
 import ProductForm from "./ProductForm";
@@ -27,6 +29,10 @@ import { formatDate } from "../utils/dateFormatter";
 
 export default function Inventory() {
   const { data: products = [], isLoading: loading, refetch } = useProducts();
+  const { data: subscription } = useStoreSubscription();
+  const plan = getPlan(subscription?.plan);
+  const atPlanLimit =
+    plan.productLimit !== null && products.length >= plan.productLimit;
   const [showForm, setShowForm] = useState(false);
   const [showReceive, setShowReceive] = useState(false);
   const [showAudit, setShowAudit] = useState(false);
@@ -149,32 +155,64 @@ export default function Inventory() {
           </p>
         </div>
 
-        {/* Mobile First: Stack all buttons vertically on mobile, then horizontal on larger screens */}
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+        {/* Toolbar: one primary action (Add Product), two secondary. */}
+        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-2.5">
+          <button
+            onClick={() => setShowForm(true)}
+            disabled={atPlanLimit}
+            title={
+              atPlanLimit
+                ? `Your ${plan.name} plan is limited to ${plan.productLimit} products`
+                : "Add a new product"
+            }
+            className="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-sm transition-colors w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add Product</span>
+          </button>
           <button
             onClick={() => setShowReceive(true)}
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 dark:from-emerald-600 dark:to-emerald-700 text-white px-5 py-3 rounded-xl hover:from-emerald-600 hover:to-emerald-700 dark:hover:from-emerald-700 dark:hover:to-emerald-800 transition-all shadow-lg hover:shadow-xl hover:scale-105 font-semibold text-sm sm:text-base w-full sm:w-auto sm:flex-1 border-2 border-emerald-400 dark:border-emerald-500"
             title="Record a new stock receipt"
+            className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 px-5 py-2.5 rounded-xl font-semibold text-sm shadow-sm transition-colors w-full sm:w-auto"
           >
-            <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
+            <TrendingUp className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Receive Stock</span>
           </button>
           <button
             onClick={() => setShowAudit(true)}
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 dark:from-amber-600 dark:to-amber-700 text-white px-5 py-3 rounded-xl hover:from-amber-600 hover:to-amber-700 dark:hover:from-amber-700 dark:hover:to-amber-800 transition-all shadow-lg hover:shadow-xl hover:scale-105 font-semibold text-sm sm:text-base w-full sm:w-auto sm:flex-1 border-2 border-amber-400 dark:border-amber-500"
             title="View stock movement history"
+            className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 px-5 py-2.5 rounded-xl font-semibold text-sm shadow-sm transition-colors w-full sm:w-auto"
           >
-            <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
+            <FileText className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <span>Stock History</span>
           </button>
-          <button
-            onClick={() => setShowForm(true)}
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 dark:from-amber-600 dark:to-amber-700 text-white px-5 py-3 rounded-xl hover:from-amber-600 hover:to-amber-700 dark:hover:from-amber-700 dark:hover:to-amber-800 transition-all shadow-lg hover:shadow-xl hover:scale-105 font-semibold text-sm sm:text-base w-full sm:w-auto sm:flex-1 border-2 border-amber-400 dark:border-amber-500"
-          >
-            <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span>Add Product</span>
-          </button>
         </div>
+
+        {/* Plan limit banner */}
+        {atPlanLimit && (
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-2xl border-2 border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/20 px-4 py-3">
+            <div className="flex items-start gap-2 text-sm text-amber-800 dark:text-amber-300">
+              <Crown className="w-4 h-4 mt-0.5 shrink-0" />
+              <span>
+                You've reached the {plan.name} plan limit of{" "}
+                <strong>{plan.productLimit} products</strong>. Upgrade your
+                plan to add more.
+              </span>
+            </div>
+            <button
+              onClick={() =>
+                window.dispatchEvent(
+                  new CustomEvent("app:navigate-tab", {
+                    detail: "subscription",
+                  }),
+                )
+              }
+              className="shrink-0 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition-colors shadow-sm"
+            >
+              View plans
+            </button>
+          </div>
+        )}
 
         {/* View toggle */}
         <div className="flex items-center justify-between">
@@ -484,36 +522,40 @@ export default function Inventory() {
                   key={product.id}
                   className="group bg-white dark:bg-slate-800 rounded-2xl shadow-sm border-2 border-slate-100 dark:border-slate-700 overflow-hidden hover:border-amber-300 dark:hover:border-amber-600 hover:shadow-lg transition-all"
                 >
-                  {/* Image */}
+                  {/* Image — object-contain on a neutral panel keeps every
+                      product photo fully visible and uniform across the row */}
                   <button
                     onClick={() => handleView(product)}
-                    className="relative block w-full aspect-square bg-slate-50 dark:bg-slate-700 overflow-hidden"
+                    className="relative block w-full aspect-square bg-white dark:bg-slate-900 overflow-hidden"
                   >
                     {product.image_url ? (
                       <OptimizedImage
                         src={product.image_url}
                         alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="w-full h-full object-contain p-3 transition-transform duration-300 group-hover:scale-105"
                         fallbackClassName="w-full h-full"
                         preset="product"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Package className="w-10 h-10 text-slate-300 dark:text-slate-500" />
+                      <div className="w-full h-full flex items-center justify-center bg-slate-50 dark:bg-slate-800">
+                        <Package className="w-10 h-10 text-slate-300 dark:text-slate-600" />
                       </div>
                     )}
-                    {/* Stock badge */}
-                    <span
-                      className={`absolute left-2 top-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold shadow-sm ${
-                        outOfStock
-                          ? "bg-red-600 text-white"
-                          : isLowStock
-                            ? "bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700"
-                            : "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700"
-                      }`}
-                    >
-                      {outOfStock ? "Out of stock" : `${product.quantity_in_stock} in stock`}
-                    </span>
+                    {/* Stock badge — frosted pill stays legible over any image */}
+                    {outOfStock ? (
+                      <span className="absolute left-2 top-2 inline-flex items-center rounded-full bg-red-600 px-2 py-0.5 text-[11px] font-bold text-white shadow-sm">
+                        Out of stock
+                      </span>
+                    ) : (
+                      <span className="absolute left-2 top-2 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2 py-0.5 text-[11px] font-semibold text-slate-700 shadow-sm ring-1 ring-black/5 backdrop-blur-sm">
+                        <span
+                          className={`h-1.5 w-1.5 rounded-full ${
+                            isLowStock ? "bg-amber-500" : "bg-emerald-500"
+                          }`}
+                        />
+                        {product.quantity_in_stock} in stock
+                      </span>
+                    )}
                   </button>
 
                   {/* Body */}

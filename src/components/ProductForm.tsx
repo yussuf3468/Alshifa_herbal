@@ -142,7 +142,13 @@ export default function ProductForm({
       onSuccess();
     } catch (error) {
       console.error("Error saving product:", error);
-      alert("Failed to save product");
+      const message =
+        error instanceof Error ? error.message : "Failed to save product";
+      alert(
+        message.includes("Plan limit")
+          ? message
+          : `Failed to save product: ${message}`,
+      );
     } finally {
       setSubmitting(false);
     }
@@ -187,7 +193,7 @@ export default function ProductForm({
 
           <form
             onSubmit={handleSubmit}
-            className="px-5 sm:px-6 py-5 max-h-[calc(100vh-10rem)] overflow-y-auto"
+            className="px-5 sm:px-6 py-5 max-h-[calc(100vh-10rem)] overflow-y-auto scrollbar-hide"
           >
             {/* ── Basics ── */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

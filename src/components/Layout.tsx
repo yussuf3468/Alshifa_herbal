@@ -26,6 +26,7 @@ import {
   MoreHorizontal,
   ChevronDown,
   Store,
+  Crown,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
@@ -163,6 +164,11 @@ const NAV_GROUPS: NavGroup[] = [
         id: "debts",
         label: "Debts",
         icon: Banknote,
+      },
+      {
+        id: "subscription",
+        label: "Subscription",
+        icon: Crown,
       },
     ],
   },

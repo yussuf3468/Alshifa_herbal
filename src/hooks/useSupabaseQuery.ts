@@ -1,9 +1,11 @@
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import type { Product } from "../types";
+import type { StoreSubscription } from "../api/subscriptionApi";
 import {
   getProducts,
   getSales,
   getRecentSales,
+  getStoreSubscription,
   getOrders,
   getPendingOrdersCount,
   getExpenses,
@@ -267,6 +269,17 @@ export function useExpenses() {
  */
 export function useDebts() {
   return useSupabaseQueryDirect<any[]>("debts", getDebts);
+}
+
+/**
+ * Hook for the store's subscription plan (free/pro/max).
+ * Falls back to the Free plan when unavailable.
+ */
+export function useStoreSubscription() {
+  return useSupabaseQueryDirect<StoreSubscription>(
+    "store-subscription",
+    getStoreSubscription,
+  );
 }
 
 /**

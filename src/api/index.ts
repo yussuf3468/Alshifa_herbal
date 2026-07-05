@@ -1,4 +1,5 @@
 export * from "./productsApi";
+export * from "./subscriptionApi";
 export * from "./ordersApi";
 export * from "./salesApi";
 export * from "./returnsApi";
