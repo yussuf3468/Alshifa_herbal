@@ -547,13 +547,13 @@ export default function OrganizedInventory() {
                 placeholder="Quick search for any product..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-white dark:bg-slate-700 border-2 border-amber-300/70 dark:border-slate-600 shadow-amber-100/50/60 shadow-sm rounded-2xl text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:ring-4 focus:ring-amber-500/25 dark:focus:ring-amber-600/25 focus:border-amber-500 dark:focus:border-amber-600 transition-all"
+                className="w-full pl-12 pr-4 py-3 bg-white dark:bg-slate-700 border-2 border-amber-300/70 dark:border-slate-600 shadow-sm rounded-2xl text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:ring-4 focus:ring-amber-500/25 dark:focus:ring-amber-600/25 focus:border-amber-500 dark:focus:border-amber-600 transition-all"
               />
             </div>
 
             {/* Search Results */}
             {searchTerm && filteredProducts.length > 0 && (
-              <div className="mt-4 bg-white dark:bg-slate-800 border-2 border-amber-300/70 dark:border-slate-700 shadow-amber-100/50/60 shadow-sm rounded-2xl p-4 max-h-96 overflow-y-auto">
+              <div className="mt-4 bg-white dark:bg-slate-800 border-2 border-amber-300/70 dark:border-slate-700 shadow-sm rounded-2xl p-4 max-h-96 overflow-y-auto">
                 <h3 className="font-bold text-slate-800 dark:text-white mb-3">
                   Search Results ({filteredProducts.length})
                 </h3>
@@ -1290,11 +1290,11 @@ export default function OrganizedInventory() {
             onClick={() => setSelectedProduct(null)}
           >
             <div
-              className="bg-white dark:bg-slate-800 border-2 border-amber-300/70 dark:border-slate-700 shadow-amber-100/50/60 shadow-sm rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-amber-500/10"
+              className="bg-white dark:bg-slate-800 border-2 border-amber-300/70 dark:border-slate-700 shadow-sm rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-amber-500/10"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
-              <div className="sticky top-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl border-b border-amber-300/70 dark:border-slate-700 shadow-amber-100/50/60 shadow-sm p-6 flex justify-between items-center z-10">
+              <div className="sticky top-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl border-b border-amber-300/70 dark:border-slate-700 shadow-sm p-6 flex justify-between items-center z-10">
                 <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
                   Product Details
                 </h2>
@@ -1506,7 +1506,7 @@ export default function OrganizedInventory() {
             <button
               onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
               disabled={currentPage === 1}
-              className="px-4 py-2 bg-white dark:bg-slate-800 border border-amber-300/70 dark:border-slate-700 shadow-amber-100/50/60 shadow-sm rounded-xl text-slate-800 dark:text-white font-medium hover:bg-gradient-to-br from-amber-50/30 via-white to-stone-50/40 dark:hover:from-slate-700 dark:hover:to-stone-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="px-4 py-2 bg-white dark:bg-slate-800 border border-amber-300/70 dark:border-slate-700 shadow-sm rounded-xl text-slate-800 dark:text-white font-medium hover:bg-gradient-to-br from-amber-50/30 via-white to-stone-50/40 dark:hover:from-slate-700 dark:hover:to-stone-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               Previous
             </button>
@@ -1547,7 +1547,7 @@ export default function OrganizedInventory() {
                       className={`min-w-[40px] px-3 py-2 rounded-xl font-medium transition-all ${
                         currentPage === page
                           ? "bg-amber-600 text-slate-900 shadow-lg shadow-amber-200"
-                          : "bg-white dark:bg-slate-800 border border-amber-300/70 dark:border-slate-700 shadow-amber-100/50/60 shadow-sm text-slate-800 dark:text-white hover:bg-amber-50 dark:hover:bg-slate-700"
+                          : "bg-white dark:bg-slate-800 border border-amber-300/70 dark:border-slate-700 shadow-sm text-slate-800 dark:text-white hover:bg-amber-50 dark:hover:bg-slate-700"
                       }`}
                     >
                       {page}
@@ -1562,7 +1562,7 @@ export default function OrganizedInventory() {
                 setCurrentPage((prev) => Math.min(totalPages, prev + 1))
               }
               disabled={currentPage === totalPages}
-              className="px-4 py-2 bg-white dark:bg-slate-800 border border-amber-300/70 dark:border-slate-700 shadow-amber-100/50/60 shadow-sm rounded-xl text-slate-800 dark:text-white font-medium hover:bg-gradient-to-br from-amber-50/30 via-white to-stone-50/40 dark:hover:from-slate-700 dark:hover:to-stone-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="px-4 py-2 bg-white dark:bg-slate-800 border border-amber-300/70 dark:border-slate-700 shadow-sm rounded-xl text-slate-800 dark:text-white font-medium hover:bg-gradient-to-br from-amber-50/30 via-white to-stone-50/40 dark:hover:from-slate-700 dark:hover:to-stone-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               Next
             </button>

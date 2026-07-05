@@ -160,7 +160,7 @@ export default function UserActivityDashboard() {
 
   if (!isAdmin) {
     return (
-      <div className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-lg rounded-2xl shadow-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm p-6">
+      <div className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-lg rounded-2xl shadow-xl border border-amber-300/70 shadow-sm p-6">
         <div className="text-center">
           <UserX className="w-16 h-16 text-red-400 mx-auto mb-4" />
           <h3 className="text-xl font-bold text-slate-800 mb-2">
@@ -191,7 +191,7 @@ export default function UserActivityDashboard() {
       </div> */}
 
       {/* Header */}
-      <div className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-lg rounded-2xl shadow-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm p-6">
+      <div className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-lg rounded-2xl shadow-xl border border-amber-300/70 shadow-sm p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="relative">
@@ -221,7 +221,7 @@ export default function UserActivityDashboard() {
       </div>
 
       {/* User Activities */}
-      <div className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-lg rounded-2xl shadow-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm p-6">
+      <div className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-lg rounded-2xl shadow-xl border border-amber-300/70 shadow-sm p-6">
         <div className="flex items-center space-x-2 mb-6">
           <Users className="w-6 h-6 text-amber-700 " />
           <h3 className="text-xl font-bold text-slate-800">
@@ -342,7 +342,7 @@ export default function UserActivityDashboard() {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-lg rounded-2xl shadow-lg border border-amber-300/70 shadow-amber-100/50/60 shadow-sm p-4">
+        <div className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-lg rounded-2xl shadow-lg border border-amber-300/70 shadow-sm p-4">
           <div className="flex items-center space-x-3">
             <div className="bg-green-100 p-2 rounded-lg">
               <UserCheck className="w-6 h-6 text-green-600" />
@@ -356,7 +356,7 @@ export default function UserActivityDashboard() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-lg rounded-2xl shadow-lg border border-amber-300/70 shadow-amber-100/50/60 shadow-sm p-4">
+        <div className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-lg rounded-2xl shadow-lg border border-amber-300/70 shadow-sm p-4">
           <div className="flex items-center space-x-3">
             <div className="bg-gradient-to-br from-amber-50/40 to-white p-2 rounded-lg">
               <Users className="w-6 h-6 text-amber-700 " />
@@ -370,7 +370,7 @@ export default function UserActivityDashboard() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-lg rounded-2xl shadow-lg border border-amber-300/70 shadow-amber-100/50/60 shadow-sm p-4">
+        <div className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-lg rounded-2xl shadow-lg border border-amber-300/70 shadow-sm p-4">
           <div className="flex items-center space-x-3">
             <div className="bg-gradient-to-br from-amber-50/40 to-white p-2 rounded-lg">
               <Activity className="w-6 h-6 text-amber-700 " />

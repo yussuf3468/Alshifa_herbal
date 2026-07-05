@@ -301,7 +301,7 @@ export default function DebtManagement() {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-3 sm:p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl border border-amber-300/70 dark:border-slate-700 shadow-amber-100/50/60 shadow-sm mb-4 sm:mb-8">
+        <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl border border-amber-300/70 dark:border-slate-700 shadow-sm mb-4 sm:mb-8">
           <div className="flex flex-col gap-4 sm:gap-6">
             <div className="text-center sm:text-left">
               <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-red-400 to-rose-400 bg-clip-text text-transparent mb-2">
@@ -333,7 +333,7 @@ export default function DebtManagement() {
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 mb-4 sm:mb-8">
-          <div className="bg-white/90 dark:bg-slate-700/90 backdrop-blur-xl rounded-2xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-amber-300/70 dark:border-slate-600 shadow-amber-100/50/60 shadow-sm">
+          <div className="bg-white/90 dark:bg-slate-700/90 backdrop-blur-xl rounded-2xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-amber-300/70 dark:border-slate-600 shadow-sm">
             <div className="flex items-center space-x-2 sm:space-x-4">
               <div className="bg-red-500/20 p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-red-500/30">
                 <TrendingUp className="w-4 h-4 sm:w-6 sm:h-6 text-red-400" />
@@ -349,7 +349,7 @@ export default function DebtManagement() {
             </div>
           </div>
 
-          <div className="bg-white/90 backdrop-blur-xl rounded-2xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-amber-300/70 shadow-amber-100/50/60 shadow-sm">
+          <div className="bg-white/90 backdrop-blur-xl rounded-2xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-amber-300/70 shadow-sm">
             <div className="flex items-center space-x-2 sm:space-x-4">
               <div className="bg-gradient-to-br from-white via-amber-50/20 to-white0/20 p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-yellow-500/30">
                 <Users className="w-4 h-4 sm:w-6 sm:h-6 text-yellow-400" />
@@ -365,9 +365,9 @@ export default function DebtManagement() {
             </div>
           </div>
 
-          <div className="bg-white/90 backdrop-blur-xl rounded-2xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-amber-300/70 shadow-amber-100/50/60 shadow-sm">
+          <div className="bg-white/90 backdrop-blur-xl rounded-2xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-amber-300/70 shadow-sm">
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <div className="bg-gradient-to-br from-white to-amber-50/300/20 p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-orange-500/30">
+              <div className="bg-gradient-to-br from-white to-amber-50/30 p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-orange-500/30">
                 <AlertCircle className="w-4 h-4 sm:w-6 sm:h-6 text-orange-400" />
               </div>
               <div>
@@ -383,8 +383,8 @@ export default function DebtManagement() {
         </div>
 
         {/* Debts List */}
-        <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-amber-300/70 dark:border-slate-700 shadow-amber-100/50/60 shadow-sm overflow-hidden">
-          <div className="p-3 sm:p-6 border-b border-amber-300/70 shadow-amber-100/50/60 shadow-sm">
+        <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl border border-amber-300/70 dark:border-slate-700 shadow-sm overflow-hidden">
+          <div className="p-3 sm:p-6 border-b border-amber-300/70 shadow-sm">
             <h2 className="text-lg sm:text-2xl font-semibold text-white">
               Debt Records
             </h2>
@@ -522,7 +522,7 @@ export default function DebtManagement() {
                   return (
                     <div
                       key={debt.id}
-                      className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-xl rounded-2xl p-4 border border-amber-300/70 shadow-amber-100/50/60 shadow-sm"
+                      className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-xl rounded-2xl p-4 border border-amber-300/70 shadow-sm"
                     >
                       <div className="flex justify-between items-start mb-3">
                         <div className="flex-1">
@@ -593,7 +593,7 @@ export default function DebtManagement() {
       {showDebtForm && (
         <ModalPortal>
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 z-[1000]">
-            <div className="bg-gradient-to-br from-white via-amber-50/20 to-white backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-8 w-full max-w-2xl shadow-2xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+            <div className="bg-gradient-to-br from-white via-amber-50/20 to-white backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-8 w-full max-w-2xl shadow-2xl border border-amber-300/70 shadow-sm max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
               <h3 className="text-lg sm:text-2xl font-semibold text-slate-900 mb-4 sm:mb-6">
                 {editingDebt ? "Edit Debt" : "Add New Debt"}
               </h3>
@@ -616,7 +616,7 @@ export default function DebtManagement() {
                           lender: e.target.value,
                         }))
                       }
-                      className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
                       placeholder="Bank name, person, or institution"
                       required
                     />
@@ -637,7 +637,7 @@ export default function DebtManagement() {
                           principal: parseFloat(e.target.value) || 0,
                         }))
                       }
-                      className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
                       placeholder="0.00"
                       required
                     />
@@ -660,7 +660,7 @@ export default function DebtManagement() {
                           interest_rate: parseFloat(e.target.value) || 0,
                         }))
                       }
-                      className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
                       placeholder="0.00"
                     />
                   </div>
@@ -678,7 +678,7 @@ export default function DebtManagement() {
                           started_on: e.target.value,
                         }))
                       }
-                      className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
                       required
                     />
                   </div>
@@ -697,7 +697,7 @@ export default function DebtManagement() {
                         due_on: e.target.value,
                       }))
                     }
-                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
                     required
                   />
                 </div>
@@ -714,7 +714,7 @@ export default function DebtManagement() {
                         notes: e.target.value,
                       }))
                     }
-                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-transparent"
                     placeholder="Additional details about this debt"
                     rows={3}
                   />
@@ -724,7 +724,7 @@ export default function DebtManagement() {
                   <button
                     type="button"
                     onClick={closeDebtForm}
-                    className="flex-1 px-4 sm:px-6 py-2 sm:py-3 border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-600 rounded-xl sm:rounded-2xl hover:bg-gradient-to-br hover:from-white hover:to-amber-50/30 transition-colors text-sm sm:text-base"
+                    className="flex-1 px-4 sm:px-6 py-2 sm:py-3 border border-amber-300/70 shadow-sm text-slate-600 rounded-xl sm:rounded-2xl hover:bg-gradient-to-br hover:from-white hover:to-amber-50/30 transition-colors text-sm sm:text-base"
                   >
                     Cancel
                   </button>
@@ -745,7 +745,7 @@ export default function DebtManagement() {
       {showPaymentForm && (
         <ModalPortal>
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-[1000]">
-            <div className="bg-gradient-to-br from-white via-amber-50/20 to-white backdrop-blur-xl rounded-3xl p-8 w-full max-w-md shadow-2xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm max-h-[90vh] overflow-y-auto">
+            <div className="bg-gradient-to-br from-white via-amber-50/20 to-white backdrop-blur-xl rounded-3xl p-8 w-full max-w-md shadow-2xl border border-amber-300/70 shadow-sm max-h-[90vh] overflow-y-auto">
               <h3 className="text-2xl font-semibold text-slate-900 mb-6">
                 Make Debt Payment
               </h3>
@@ -763,7 +763,7 @@ export default function DebtManagement() {
                         debt_id: e.target.value,
                       }))
                     }
-                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required
                   >
                     <option value="">Choose a debt...</option>
@@ -792,7 +792,7 @@ export default function DebtManagement() {
                         payment_amount: parseFloat(e.target.value) || 0,
                       }))
                     }
-                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="0.00"
                     required
                   />
@@ -811,7 +811,7 @@ export default function DebtManagement() {
                         payment_date: e.target.value,
                       }))
                     }
-                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required
                   />
                 </div>
@@ -828,7 +828,7 @@ export default function DebtManagement() {
                         payment_method: e.target.value,
                       }))
                     }
-                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required
                   >
                     {PAYMENT_METHODS.map((method) => (
@@ -851,7 +851,7 @@ export default function DebtManagement() {
                         notes: e.target.value,
                       }))
                     }
-                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Payment details or reference"
                     rows={3}
                   />
@@ -861,7 +861,7 @@ export default function DebtManagement() {
                   <button
                     type="button"
                     onClick={closePaymentForm}
-                    className="flex-1 px-4 sm:px-6 py-2 sm:py-3 border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-600 rounded-xl sm:rounded-2xl hover:bg-gradient-to-br hover:from-white hover:to-amber-50/30 transition-colors text-sm sm:text-base"
+                    className="flex-1 px-4 sm:px-6 py-2 sm:py-3 border border-amber-300/70 shadow-sm text-slate-600 rounded-xl sm:rounded-2xl hover:bg-gradient-to-br hover:from-white hover:to-amber-50/30 transition-colors text-sm sm:text-base"
                   >
                     Cancel
                   </button>

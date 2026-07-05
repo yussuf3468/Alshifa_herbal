@@ -124,7 +124,7 @@ export default function StaffDashboard() {
   return (
     <div className="space-y-4 md:space-y-6 animate-fadeIn">
       {/* Hero Section - Staff Greeting */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-white via-amber-50/30 to-white dark:from-slate-800 dark:via-amber-900/10 dark:to-slate-800 backdrop-blur-2xl border border-amber-300/70 dark:border-amber-700/70 shadow-amber-100/50/60 shadow-sm rounded-3xl p-4 md:p-6 shadow-2xl shadow-amber-500/10 transition-colors duration-200">
+      <div className="relative overflow-hidden bg-gradient-to-br from-white via-amber-50/30 to-white dark:from-slate-800 dark:via-amber-900/10 dark:to-slate-800 backdrop-blur-2xl border border-amber-300/70 dark:border-amber-700/70 shadow-sm rounded-3xl p-4 md:p-6 shadow-2xl shadow-amber-500/10 transition-colors duration-200">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 dark:from-emerald-500/5 dark:to-cyan-500/5"></div>
         <div className="relative">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
@@ -230,7 +230,7 @@ export default function StaffDashboard() {
       {/* Period Performance Summary */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         {/* This Week Card */}
-        <div className="bg-gradient-to-br from-white via-amber-50/30 to-white backdrop-blur-2xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm rounded-3xl p-6 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500">
+        <div className="bg-gradient-to-br from-white via-amber-50/30 to-white backdrop-blur-2xl border border-amber-300/70 shadow-sm rounded-3xl p-6 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500">
           <div className="flex items-center space-x-3 mb-4">
             <div className="p-2.5 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl shadow-amber-400/30 shadow-xl shadow-amber-400/10">
               <Calendar className="w-5 h-5 text-white" />
@@ -256,7 +256,7 @@ export default function StaffDashboard() {
         </div>
 
         {/* This Month Card */}
-        <div className="bg-gradient-to-br from-white via-amber-50/30 to-white backdrop-blur-2xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm rounded-3xl p-6 shadow-2xl hover:shadow-2xl hover:shadow-amber-400/20 transition-all duration-500">
+        <div className="bg-gradient-to-br from-white via-amber-50/30 to-white backdrop-blur-2xl border border-amber-300/70 shadow-sm rounded-3xl p-6 shadow-2xl hover:shadow-2xl hover:shadow-amber-400/20 transition-all duration-500">
           <div className="flex items-center space-x-3 mb-4">
             <div className="p-2.5 bg-gradient-to-br from-amber-500 to-rose-500 rounded-2xl shadow-xl shadow-amber-400/10">
               <Calendar className="w-5 h-5 text-white" />
@@ -283,7 +283,7 @@ export default function StaffDashboard() {
       </div>
 
       {/* Today's Sales List */}
-      <div className="bg-gradient-to-br from-white via-amber-50/30 to-white backdrop-blur-2xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm rounded-3xl p-6 shadow-2xl shadow-amber-500/10">
+      <div className="bg-gradient-to-br from-white via-amber-50/30 to-white backdrop-blur-2xl border border-amber-300/70 shadow-sm rounded-3xl p-6 shadow-2xl shadow-amber-500/10">
         <div className="flex items-center space-x-3 mb-6">
           <div className="p-2.5 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-2xl shadow-xl shadow-amber-400/10">
             <ShoppingBag className="w-5 h-5 text-white" />
@@ -298,7 +298,7 @@ export default function StaffDashboard() {
 
         {todaysSales.length === 0 ? (
           <div className="text-center py-12">
-            <div className="w-16 h-16 mx-auto mb-4 bg-white/90 dark:bg-slate-700/90 backdrop-blur-xl rounded-full flex items-center justify-center border border-amber-300/70 dark:border-amber-600/50 shadow-amber-100/50/60 shadow-sm">
+            <div className="w-16 h-16 mx-auto mb-4 bg-white/90 dark:bg-slate-700/90 backdrop-blur-xl rounded-full flex items-center justify-center border border-amber-300/70 dark:border-amber-600/50 shadow-sm">
               <ShoppingBag className="w-8 h-8 text-slate-700 dark:text-slate-400" />
             </div>
             <p className="text-slate-900 dark:text-white font-bold mb-2">
@@ -323,11 +323,11 @@ export default function StaffDashboard() {
                       <OptimizedImage
                         src={product.image_url}
                         alt={product.name}
-                        className="w-16 h-16 object-cover rounded-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm flex-shrink-0"
+                        className="w-16 h-16 object-cover rounded-xl border border-amber-300/70 shadow-sm flex-shrink-0"
                         preset="thumbnail"
                       />
                     ) : (
-                      <div className="w-16 h-16 bg-gradient-to-br from-white/10 to-white/20 dark:from-slate-700/50 dark:to-slate-600/50 rounded-xl flex items-center justify-center border border-amber-300/70 dark:border-amber-600/50 shadow-amber-100/50/60 shadow-sm flex-shrink-0">
+                      <div className="w-16 h-16 bg-gradient-to-br from-white/10 to-white/20 dark:from-slate-700/50 dark:to-slate-600/50 rounded-xl flex items-center justify-center border border-amber-300/70 dark:border-amber-600/50 shadow-sm flex-shrink-0">
                         <ShoppingBag className="w-8 h-8 text-slate-700 dark:text-slate-400" />
                       </div>
                     )}
@@ -416,7 +416,7 @@ function MetricCard({
   const colors = colorClasses[color];
 
   return (
-    <div className="group relative bg-gradient-to-br from-white via-amber-50/30 to-white dark:from-slate-800 dark:via-amber-900/10 dark:to-slate-800 backdrop-blur-2xl border border-amber-300/70 dark:border-amber-700/50 shadow-amber-100/50/60 shadow-sm rounded-2xl p-4 md:p-5 shadow-2xl hover:shadow-2xl hover:shadow-amber-400/20 dark:hover:shadow-amber-600/20 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] cursor-pointer will-change-transform overflow-hidden">
+    <div className="group relative bg-gradient-to-br from-white via-amber-50/30 to-white dark:from-slate-800 dark:via-amber-900/10 dark:to-slate-800 backdrop-blur-2xl border border-amber-300/70 dark:border-amber-700/50 shadow-sm rounded-2xl p-4 md:p-5 shadow-2xl hover:shadow-2xl hover:shadow-amber-400/20 dark:hover:shadow-amber-600/20 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] cursor-pointer will-change-transform overflow-hidden">
       <div
         className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-500 rounded-2xl`}
       ></div>

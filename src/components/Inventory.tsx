@@ -376,7 +376,7 @@ export default function Inventory() {
                       <OptimizedImage
                         src={product.image_url}
                         alt={product.name}
-                        className="w-16 h-16 object-cover rounded-2xl border-2 border-amber-300/70 shadow-amber-100/50/60 shadow-sm"
+                        className="w-16 h-16 object-cover rounded-2xl border-2 border-amber-300/70 shadow-sm"
                         preset="thumbnail"
                       />
                     </button>

@@ -202,7 +202,7 @@ export default function InitialInvestment() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-stone-50 to-amber-50 p-3 sm:p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl border border-amber-300/70 dark:border-slate-700 shadow-amber-100/50/60 shadow-sm mb-4 sm:mb-8">
+        <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-xl border border-amber-300/70 dark:border-slate-700 shadow-sm mb-4 sm:mb-8">
           <div className="flex flex-col gap-4 sm:gap-6">
             <div className="text-center sm:text-left">
               <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent mb-2">
@@ -224,7 +224,7 @@ export default function InitialInvestment() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 mb-4 sm:mb-8">
-          <div className="bg-white/90 dark:bg-slate-700/90 backdrop-blur-xl rounded-2xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-amber-300/70 dark:border-slate-600 shadow-amber-100/50/60 shadow-sm">
+          <div className="bg-white/90 dark:bg-slate-700/90 backdrop-blur-xl rounded-2xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-amber-300/70 dark:border-slate-600 shadow-sm">
             <div className="flex items-center space-x-2 sm:space-x-4">
               <div className="bg-emerald-500/20 p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-emerald-500/30">
                 <TrendingUp className="w-4 h-4 sm:w-6 sm:h-6 text-emerald-400" />
@@ -240,7 +240,7 @@ export default function InitialInvestment() {
             </div>
           </div>
 
-          <div className="bg-white/90 dark:bg-slate-700/90 backdrop-blur-xl rounded-2xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-amber-300/70 dark:border-slate-600 shadow-amber-100/50/60 shadow-sm">
+          <div className="bg-white/90 dark:bg-slate-700/90 backdrop-blur-xl rounded-2xl sm:rounded-2xl p-3 sm:p-6 shadow-lg border border-amber-300/70 dark:border-slate-600 shadow-sm">
             <div className="flex items-center space-x-2 sm:space-x-4">
               <div className="bg-gradient-to-br from-amber-50/40 to-white p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-amber-300">
                 <Banknote className="w-4 h-4 sm:w-6 sm:h-6 text-blue-400" />
@@ -254,7 +254,7 @@ export default function InitialInvestment() {
             </div>
           </div>
 
-          <div className="bg-white/90 dark:bg-slate-700/90 backdrop-blur-xl rounded-2xl p-6 shadow-lg border border-amber-300/70 dark:border-slate-600 shadow-amber-100/50/60 shadow-sm">
+          <div className="bg-white/90 dark:bg-slate-700/90 backdrop-blur-xl rounded-2xl p-6 shadow-lg border border-amber-300/70 dark:border-slate-600 shadow-sm">
             <div className="flex items-center space-x-4">
               <div className="bg-gradient-to-br from-amber-50/40 to-white p-3 rounded-2xl border border-amber-300">
                 <Calendar className="w-6 h-6 text-amber-700 " />
@@ -269,8 +269,8 @@ export default function InitialInvestment() {
           </div>
         </div>
 
-        <div className="overflow-x-auto bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl shadow-xl border border-amber-300/70 dark:border-slate-700 shadow-amber-100/50/60 shadow-sm overflow-hidden mb-8">
-          <div className="p-6 border-b border-amber-300/70 shadow-amber-100/50/60 shadow-sm">
+        <div className="overflow-x-auto bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl shadow-xl border border-amber-300/70 dark:border-slate-700 shadow-sm overflow-hidden mb-8">
+          <div className="p-6 border-b border-amber-300/70 shadow-sm">
             <h2 className="text-2xl font-semibold text-white">
               Investment Records
             </h2>
@@ -361,7 +361,7 @@ export default function InitialInvestment() {
         </div>
 
         {Object.keys(investmentsBySource).length > 0 && (
-          <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-amber-300/70 dark:border-slate-700 shadow-amber-100/50/60 shadow-sm">
+          <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-amber-300/70 dark:border-slate-700 shadow-sm">
             <h3 className="text-2xl font-semibold text-slate-900 mb-6">
               Investment Breakdown by Source
             </h3>
@@ -371,7 +371,7 @@ export default function InitialInvestment() {
                 .map(([source, amount]) => (
                   <div
                     key={source}
-                    className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-xl rounded-2xl p-4 hover:bg-gradient-to-br hover:from-white hover:to-amber-50/30 transition-colors border border-amber-300/70 shadow-amber-100/50/60 shadow-sm"
+                    className="bg-gradient-to-br from-white to-stone-50/50 backdrop-blur-xl rounded-2xl p-4 hover:bg-gradient-to-br hover:from-white hover:to-amber-50/30 transition-colors border border-amber-300/70 shadow-sm"
                   >
                     <div className="flex items-center space-x-3 mb-2">
                       <div className="bg-emerald-500/20 p-1 rounded border border-emerald-500/30">
@@ -405,7 +405,7 @@ export default function InitialInvestment() {
       {showForm && (
         <ModalPortal>
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-[1000]">
-            <div className="bg-gradient-to-br from-white via-amber-50/20 to-white backdrop-blur-xl rounded-3xl p-8 w-full max-w-md shadow-2xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm max-h-[90vh] overflow-y-auto">
+            <div className="bg-gradient-to-br from-white via-amber-50/20 to-white backdrop-blur-xl rounded-3xl p-8 w-full max-w-md shadow-2xl border border-amber-300/70 shadow-sm max-h-[90vh] overflow-y-auto">
               <h3 className="text-2xl font-semibold text-slate-900 mb-6">
                 {editingInvestment ? "Edit Investment" : "Add New Investment"}
               </h3>
@@ -423,7 +423,7 @@ export default function InitialInvestment() {
                         source: e.target.value,
                       }))
                     }
-                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                     required
                   >
                     {INVESTMENT_SOURCES.map((s) => (
@@ -449,7 +449,7 @@ export default function InitialInvestment() {
                         amount: parseFloat(e.target.value) || 0,
                       }))
                     }
-                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                     placeholder="0.00"
                     required
                   />
@@ -468,7 +468,7 @@ export default function InitialInvestment() {
                         invested_on: e.target.value,
                       }))
                     }
-                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                     required
                   />
                 </div>
@@ -485,7 +485,7 @@ export default function InitialInvestment() {
                         notes: e.target.value,
                       }))
                     }
-                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                    className="w-full px-4 py-3 bg-white/90 backdrop-blur-xl border border-amber-300/70 shadow-sm text-slate-900 placeholder-slate-400 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                     placeholder="Additional details about this investment"
                     rows={3}
                   />
@@ -495,7 +495,7 @@ export default function InitialInvestment() {
                   <button
                     type="button"
                     onClick={closeForm}
-                    className="flex-1 px-6 py-3 border border-amber-300/70 shadow-amber-100/50/60 shadow-sm text-slate-600 rounded-2xl hover:bg-gradient-to-br hover:from-white hover:to-amber-50/30 transition-colors"
+                    className="flex-1 px-6 py-3 border border-amber-300/70 shadow-sm text-slate-600 rounded-2xl hover:bg-gradient-to-br hover:from-white hover:to-amber-50/30 transition-colors"
                   >
                     Cancel
                   </button>

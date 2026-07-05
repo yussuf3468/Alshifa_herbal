@@ -236,3 +236,18 @@
     font-size: 13px !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   Mobile input zoom fix
+   iOS Safari (and some Android browsers) auto-zoom the page when a
+   focused form control has a font size below 16px. Forcing 16px on
+   phone-sized screens stops the zoom-on-focus without disabling
+   pinch-zoom (an accessibility feature). Desktop keeps design sizes.
+   ═══════════════════════════════════════════════════════════════ */
+@media screen and (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}

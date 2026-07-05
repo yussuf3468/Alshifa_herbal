@@ -992,7 +992,7 @@ export default function FinancialDashboard() {
       </div>
 
       {/* Financial Insights */}
-      <div className="bg-gradient-to-br from-white via-amber-50/20 to-white dark:from-slate-800 dark:via-slate-700/50 dark:to-slate-800 backdrop-blur-xl rounded-2xl sm:rounded-2xl p-4 sm:p-6 border border-amber-300/70 dark:border-slate-600 shadow-amber-100/50/60 shadow-sm">
+      <div className="bg-gradient-to-br from-white via-amber-50/20 to-white dark:from-slate-800 dark:via-slate-700/50 dark:to-slate-800 backdrop-blur-xl rounded-2xl sm:rounded-2xl p-4 sm:p-6 border border-amber-300/70 dark:border-slate-600 shadow-sm">
         <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-4 flex items-center space-x-2">
           <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400" />
           <span>Financial Insights</span>
