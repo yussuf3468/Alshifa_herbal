@@ -160,6 +160,7 @@ export default function Inventory() {
           <button
             onClick={() => setShowForm(true)}
             disabled={atPlanLimit}
+            data-tour="add-product"
             title={
               atPlanLimit
                 ? `Your ${plan.name} plan is limited to ${plan.productLimit} products`

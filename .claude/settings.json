@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmd //c \"npx tsc --noEmit -p tsconfig.app.json\")",
+      "Bash(cmd //c \"npx vite build\")"
+    ]
+  }
+}

@@ -27,11 +27,14 @@ import {
   ChevronDown,
   Store,
   Crown,
+  HelpCircle,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { usePendingOrdersCount } from "../hooks/useSupabaseQuery";
+import GuidedTour from "./GuidedTour";
+import { TOUR_STEPS } from "../config/tourSteps";
 
 interface LayoutProps {
   children: ReactNode;
@@ -209,6 +212,19 @@ export default function Layout({
   const isAdmin = !!user;
   const isStaff = !!user;
 
+  // Guided walkthrough — auto-runs once per browser, replayable via the ? button.
+  const [tourOpen, setTourOpen] = useState(false);
+  useEffect(() => {
+    if (user && !localStorage.getItem("alshifa_tour_seen_v1")) {
+      const t = setTimeout(() => setTourOpen(true), 700);
+      return () => clearTimeout(t);
+    }
+  }, [user]);
+  const closeTour = () => {
+    setTourOpen(false);
+    localStorage.setItem("alshifa_tour_seen_v1", "1");
+  };
+
   // UI state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -306,6 +322,7 @@ export default function Layout({
       <button
         type="button"
         onClick={onClick}
+        data-tour={`nav-${item.id}`}
         className={`group relative w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
           active
             ? "bg-emerald-600 text-white shadow-sm"
@@ -366,15 +383,20 @@ export default function Layout({
           </div>
         </div>
 
-        {/* Desktop: page title area (kept clean) */}
-        <div className="hidden lg:flex items-center min-w-0">
-          <h1 className="text-sm font-semibold text-slate-500 dark:text-slate-400">
-            {currentPageLabel(activeTab) || BRAND.tagline}
-          </h1>
-        </div>
+        {/* Desktop: spacer keeps the controls aligned to the right */}
+        <div className="hidden lg:block flex-1" />
 
-        {/* Right side: theme, user menu */}
+        {/* Right side: help, theme, user menu */}
         <div className="flex items-center gap-1.5 sm:gap-2">
+          <button
+            type="button"
+            onClick={() => setTourOpen(true)}
+            aria-label="Take a tour"
+            title="Take a tour"
+            className="w-9 h-9 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300"
+          >
+            <HelpCircle className="w-5 h-5" />
+          </button>
           <button
             type="button"
             onClick={toggleTheme}
@@ -689,15 +711,14 @@ export default function Layout({
           <span>More</span>
         </button>
       </nav>
+
+      {/* Guided walkthrough */}
+      <GuidedTour
+        steps={TOUR_STEPS}
+        open={tourOpen}
+        onClose={closeTour}
+        onNavigateTab={onTabChange}
+      />
     </div>
   );
-}
-
-// Resolve current page label for desktop header
-function currentPageLabel(tabId: string): string {
-  for (const g of NAV_GROUPS) {
-    const found = g.items.find((i) => i.id === tabId);
-    if (found) return found.label;
-  }
-  return "";
 }
