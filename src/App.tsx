@@ -6,6 +6,9 @@ import { ArrowLeft } from "lucide-react";
 import { AppLoader, ViewLoader } from "./components/BrandLoader";
 import QueryDiagnostics from "./components/QueryDiagnostics";
 import StorefrontPage from "./pages/StorefrontPage";
+import TrialLockScreen from "./components/TrialLockScreen";
+import { useStoreSubscription } from "./hooks/useSupabaseQuery";
+import { getSubscriptionAccess } from "./config/subscriptionPlans";
 
 // Admin-only chrome stays out of the public bundle — customers never
 // download it.
@@ -41,6 +44,9 @@ function ViewFallback() {
 function AppContent() {
   const [viewMode, setViewMode] = useState<"admin" | "customer">("customer");
   const { user, loading } = useAuth();
+  const { data: subscription, isLoading: subscriptionLoading } =
+    useStoreSubscription();
+  const access = getSubscriptionAccess(subscription);
   const hadUserRef = useRef(false);
 
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -147,6 +153,12 @@ function AppContent() {
         </div>
       </div>
     );
+  }
+
+  // Trial/subscription expired → lock the admin app (data stays intact;
+  // the DB write-freeze is the hard enforcement, this is the friendly face).
+  if (!subscriptionLoading && !access.active) {
+    return <TrialLockScreen isTrial={access.isTrial} endsAt={access.endsAt} />;
   }
 
   return (

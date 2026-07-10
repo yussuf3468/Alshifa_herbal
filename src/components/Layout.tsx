@@ -32,9 +32,16 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
-import { usePendingOrdersCount } from "../hooks/useSupabaseQuery";
+import {
+  usePendingOrdersCount,
+  useStoreSubscription,
+} from "../hooks/useSupabaseQuery";
 import GuidedTour from "./GuidedTour";
 import { TOUR_STEPS } from "../config/tourSteps";
+import {
+  getSubscriptionAccess,
+  TRIAL_WARN_DAYS,
+} from "../config/subscriptionPlans";
 
 interface LayoutProps {
   children: ReactNode;
@@ -206,6 +213,8 @@ export default function Layout({
   const { user, signOut } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { data: pendingOrdersCount = 0 } = usePendingOrdersCount();
+  const { data: subscriptionData } = useStoreSubscription();
+  const access = getSubscriptionAccess(subscriptionData);
 
   // Access: every authenticated user has full access — no hardcoded
   // email-based role gating.
@@ -647,6 +656,34 @@ export default function Layout({
           MAIN CONTENT
       ========================================================= */}
       <main className="lg:pl-64 pt-14 pb-20 lg:pb-0 min-h-screen">
+        {/* Trial countdown banner */}
+        {access.active &&
+          access.isTrial &&
+          access.daysLeft !== null &&
+          access.daysLeft <= TRIAL_WARN_DAYS && (
+            <div
+              className={`px-3 sm:px-5 lg:px-6 py-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b text-sm ${
+                access.daysLeft <= 3
+                  ? "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-800 dark:text-red-300"
+                  : "bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300"
+              }`}
+            >
+              <span className="font-medium">
+                Your free trial ends in{" "}
+                <strong>
+                  {access.daysLeft} day{access.daysLeft !== 1 ? "s" : ""}
+                </strong>{" "}
+                — upgrade to keep selling without interruption.
+              </span>
+              <button
+                onClick={() => onTabChange("subscription")}
+                className="shrink-0 px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors"
+              >
+                View plans
+              </button>
+            </div>
+          )}
+
         <div className="px-3 sm:px-5 lg:px-6 py-4 lg:py-6 max-w-[1600px] mx-auto w-full">
           {children}
         </div>

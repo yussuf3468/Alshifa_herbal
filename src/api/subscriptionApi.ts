@@ -3,9 +3,14 @@ import { apiClient } from "./client";
 export interface StoreSubscription {
   plan: string;
   renews_at: string | null;
+  trial_ends_at: string | null;
 }
 
-const FREE_FALLBACK: StoreSubscription = { plan: "free", renews_at: null };
+const FREE_FALLBACK: StoreSubscription = {
+  plan: "free",
+  renews_at: null,
+  trial_ends_at: null,
+};
 
 /**
  * Current store subscription. Falls back to the Free plan when the
@@ -27,7 +32,7 @@ export async function getStoreSubscription(): Promise<StoreSubscription> {
       };
     })
       .from("store_subscription")
-      .select("plan,renews_at")
+      .select("plan,renews_at,trial_ends_at")
       .limit(1)
       .maybeSingle();
 

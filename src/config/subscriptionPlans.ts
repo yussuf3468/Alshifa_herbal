@@ -83,3 +83,62 @@ export function formatProductLimit(limit: number | null): string {
 
 /** WhatsApp number that receives upgrade requests (platform operator). */
 export const BILLING_WHATSAPP = "254722261776";
+
+/** Free-trial length. Must match trial_ends_at default in the DB migration. */
+export const TRIAL_DAYS = 45;
+/** Days a paid plan keeps working after renews_at passes. Matches the DB. */
+export const PAID_GRACE_DAYS = 5;
+/** Show the trial countdown banner when this many days (or fewer) remain. */
+export const TRIAL_WARN_DAYS = 14;
+
+export interface SubscriptionAccess {
+  /** Can the store operate right now? */
+  active: boolean;
+  /** True when access is governed by the free trial. */
+  isTrial: boolean;
+  /** Whole days until access ends (0 when expired); null = no deadline. */
+  daysLeft: number | null;
+  /** The governing deadline, if any. */
+  endsAt: string | null;
+}
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Client-side mirror of the database's subscription_is_active() — used for
+ * the lock screen, countdown banner and storefront gate. Fails OPEN when
+ * data is missing (the DB trigger is the real enforcement).
+ */
+export function getSubscriptionAccess(
+  sub?: {
+    plan?: string | null;
+    renews_at?: string | null;
+    trial_ends_at?: string | null;
+  } | null,
+): SubscriptionAccess {
+  const now = Date.now();
+  if (!sub) return { active: true, isTrial: false, daysLeft: null, endsAt: null };
+
+  if (!sub.plan || sub.plan === "free") {
+    if (!sub.trial_ends_at)
+      return { active: true, isTrial: true, daysLeft: null, endsAt: null };
+    const ends = new Date(sub.trial_ends_at).getTime();
+    return {
+      active: now < ends,
+      isTrial: true,
+      daysLeft: Math.max(0, Math.ceil((ends - now) / DAY_MS)),
+      endsAt: sub.trial_ends_at,
+    };
+  }
+
+  if (!sub.renews_at)
+    return { active: true, isTrial: false, daysLeft: null, endsAt: null };
+  const graceEnd =
+    new Date(sub.renews_at).getTime() + PAID_GRACE_DAYS * DAY_MS;
+  return {
+    active: now < graceEnd,
+    isTrial: false,
+    daysLeft: Math.max(0, Math.ceil((graceEnd - now) / DAY_MS)),
+    endsAt: sub.renews_at,
+  };
+}

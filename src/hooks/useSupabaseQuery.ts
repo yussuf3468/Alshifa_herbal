@@ -279,6 +279,13 @@ export function useStoreSubscription() {
   return useSupabaseQueryDirect<StoreSubscription>(
     "store-subscription",
     getStoreSubscription,
+    {
+      // Plan/trial changes happen out-of-band (operator SQL), so don't cache
+      // this one forever — pick up changes within a few minutes and on refocus
+      // so the lock screen / upgrades take effect reliably.
+      staleTime: 3 * 60 * 1000,
+      refetchOnWindowFocus: true,
+    },
   );
 }
 

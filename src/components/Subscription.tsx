@@ -5,6 +5,7 @@ import {
   SUBSCRIPTION_PLANS,
   formatProductLimit,
   getPlan,
+  getSubscriptionAccess,
   type PlanId,
 } from "../config/subscriptionPlans";
 import { formatDate } from "../utils/dateFormatter";
@@ -27,6 +28,7 @@ export default function Subscription() {
   const { data: subscription } = useStoreSubscription();
 
   const currentPlan = getPlan(subscription?.plan);
+  const access = getSubscriptionAccess(subscription);
   const used = products.length;
   const limit = currentPlan.productLimit;
   const pct = limit ? Math.min(100, Math.round((used / limit) * 100)) : 0;
@@ -72,6 +74,21 @@ export default function Subscription() {
                 {subscription?.renews_at &&
                   ` · renews ${formatDate(subscription.renews_at)}`}
               </p>
+              {access.isTrial && access.endsAt && (
+                <p
+                  className={`mt-1 text-xs font-semibold ${
+                    (access.daysLeft ?? 99) <= 3
+                      ? "text-red-600 dark:text-red-400"
+                      : (access.daysLeft ?? 99) <= 14
+                        ? "text-amber-600 dark:text-amber-400"
+                        : "text-slate-500 dark:text-slate-400"
+                  }`}
+                >
+                  Free trial ends {formatDate(access.endsAt)}
+                  {access.daysLeft !== null &&
+                    ` — ${access.daysLeft} day${access.daysLeft !== 1 ? "s" : ""} left`}
+                </p>
+              )}
             </div>
           </div>
           <div className="text-left sm:text-right">

@@ -13,6 +13,8 @@ import { storeConfig } from "./config/store";
 import { RouteProvider, useRoute } from "./lib/router";
 import { StorefrontUIProvider, useStorefrontUI } from "./lib/ui-context";
 import HomePage from "./pages/HomePage";
+import { useStoreSubscription } from "../hooks/useSupabaseQuery";
+import { getSubscriptionAccess } from "../config/subscriptionPlans";
 
 // Only the homepage ships in the first paint; every other page and
 // dialog loads on demand so the public bundle stays light.
@@ -53,7 +55,46 @@ interface StorefrontAppProps {
   onAdminClick: () => void;
 }
 
+/** Discreet closed-shutter page shown to shoppers when the store is expired. */
+function StoreUnavailable({ onAdminClick }: { onAdminClick: () => void }) {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[#faf8f4] px-6">
+      <div className="max-w-md text-center">
+        <div
+          className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl text-2xl font-bold text-white"
+          style={{ background: storeConfig.theme.accent }}
+        >
+          {storeConfig.monogram}
+        </div>
+        <h1 className="text-2xl font-semibold text-slate-900">
+          {storeConfig.name} is temporarily unavailable
+        </h1>
+        <p className="mt-3 text-[15px] leading-relaxed text-slate-600">
+          We're doing a little housekeeping. Please check back soon — or reach
+          us on{" "}
+          <a
+            href={`https://wa.me/${storeConfig.contact.whatsapp}`}
+            className="font-semibold underline"
+            style={{ color: storeConfig.theme.accent }}
+          >
+            WhatsApp
+          </a>{" "}
+          for anything urgent.
+        </p>
+        <button
+          onClick={onAdminClick}
+          className="mt-8 text-xs text-slate-400 hover:text-slate-600"
+        >
+          Store owner? Sign in
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function StorefrontApp({ onAdminClick }: StorefrontAppProps) {
+  const { data: subscription } = useStoreSubscription();
+  const access = getSubscriptionAccess(subscription);
   // The storefront ships one deliberate palette and ignores the app's
   // dark-mode preference (like any brand site). Strip the `dark` class
   // while mounted so shared components render light, and restore it
@@ -81,6 +122,11 @@ export default function StorefrontApp({ onAdminClick }: StorefrontAppProps) {
       }) as React.CSSProperties,
     [],
   );
+
+  // Expired store → closed-shutter page (shoppers never see billing details).
+  if (!access.active) {
+    return <StoreUnavailable onAdminClick={onAdminClick} />;
+  }
 
   return (
     <RouteProvider>
